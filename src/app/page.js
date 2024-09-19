@@ -4,6 +4,6 @@ import TodoList from "./components/TodoList";
 export default function Home() {
 	return <main className="">
     <TodoItem/>
-    <TodoList/>
+    {/* <TodoList/> */}
     </main>;
 }

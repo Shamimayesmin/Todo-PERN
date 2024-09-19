@@ -1,12 +1,20 @@
 "use client";
 import React, { useState } from "react";
+import TodoList from "./TodoList";
 
 const TodoItem = () => {
+	const [todos, setTodos] = useState([]);
 	const [description, setDescription] = useState("");
+	const [error, setError] = useState("");
 
 	const onSubmitForm = async (e) => {
 		e.preventDefault();
-		
+
+		// Input validation
+		if (!description.trim()) {
+			setError("Input field cannot be empty");
+			return;
+		}
 
 		try {
 			const body = { description };
@@ -16,13 +24,18 @@ const TodoItem = () => {
 				body: JSON.stringify(body),
 			});
 
+			window.location = "/";
+
 			if (!response.ok) {
-				// If response status is not ok, log an error
 				throw new Error(`Server error: ${response.statusText}`);
 			}
 
-			const data = await response.json(); // Assuming response is JSON
-			console.log("Response from server:", data);
+			const newTodo = await response.json();
+			// console.log("Response from server:", newTodo);
+
+			setTodos([...todos, newTodo]);
+			setDescription("");
+			setError("");
 		} catch (err) {
 			console.error(err.message);
 		}
@@ -33,25 +46,29 @@ const TodoItem = () => {
 				Input TODO
 			</h1>
 			<div className="w-1/2 mx-auto">
-				<form
-					className=" p-4 flex justify-center gap-3"
-					onSubmit={onSubmitForm}
-				>
+				<form className=" p-2 flex justify-center" onSubmit={onSubmitForm}>
 					<input
 						type="text"
 						placeholder="input todo"
-						className="w-1/2 p-3 text-center rounded-md border-2"
+						className={`w-1/2 p-3 text-center rounded-sm border-2 ${error ? 'border-red-500' : ''}`}
 						value={description}
 						onChange={(e) => {
 							setDescription(e.target.value);
-							console.log("Current input value:", e.target.value);
+                            setError("");
 						}}
 					/>
-					<button className="px-4 bg-blue-500 text-white rounded-md">
+					<button
+						type="submit"
+						className="px-4 bg-blue-500 text-white rounded-sm"
+					>
 						Add
 					</button>
+                    
 				</form>
+                {error && <p className="text-red-500 text-center">{error}</p>}
+                
 			</div>
+			<TodoList/>
 		</>
 	);
 };
