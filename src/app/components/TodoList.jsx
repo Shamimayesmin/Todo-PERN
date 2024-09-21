@@ -44,24 +44,25 @@ const TodoList = () => {
 					</thead>
 					<tbody>
 						{todos.length === 0 ? (
-							
 							<tr>
 								<td colSpan="3" className="text-center p-5">
 									No todos available.
 								</td>
 							</tr>
 						) : (
-						
 							todos?.map((todo, index) => (
 								<tr key={todo?.id}>
 									<th className="p-5">{index + 1}</th>
 									<td>{todo?.description}</td>
-									
+
 									<th className="w-20 p-1">
-									<EditTodo todo={todo} fetchAllTodos={fetchAllTodos}/>
+										<EditTodo todo={todo} fetchAllTodos={fetchAllTodos} />
 									</th>
 									<th className="w-20 p-1">
-										<button  onClick={() => deleteTodo(todo?.id)} className="btn btn-ghost btn-sm bg-green-400">
+										<button
+											onClick={() => deleteTodo(todo?.id)}
+											className="btn btn-ghost btn-sm bg-green-400"
+										>
 											Delete
 										</button>
 									</th>

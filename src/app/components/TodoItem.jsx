@@ -50,11 +50,13 @@ const TodoItem = () => {
 					<input
 						type="text"
 						placeholder="input todo"
-						className={`w-1/2 p-3 text-center rounded-sm border-2 ${error ? 'border-red-500' : ''}`}
+						className={`w-1/2 p-3 text-center rounded-sm border-2 ${
+							error ? "border-red-500" : ""
+						}`}
 						value={description}
 						onChange={(e) => {
 							setDescription(e.target.value);
-                            setError("");
+							setError("");
 						}}
 					/>
 					<button
@@ -63,12 +65,10 @@ const TodoItem = () => {
 					>
 						Add
 					</button>
-                    
 				</form>
-                {error && <p className="text-red-500 text-center">{error}</p>}
-                
+				{error && <p className="text-red-500 text-center">{error}</p>}
 			</div>
-			<TodoList/>
+			<TodoList />
 		</>
 	);
 };
